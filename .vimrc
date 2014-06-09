@@ -39,8 +39,8 @@ vnoremap ( "zdi(z)
 vnoremap (" "zdi("z")
 vnoremap (' "zdi('z')
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap []<Enter> []]<Left><CR><ESC><S-o>
-inoremap ()<Enter> ())<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
 
 set nocompatible
@@ -51,6 +51,7 @@ call vundle#rc()
 
 "" Vundle自身もVundleで管理
 Bundle 'gmarik/vundle'
+Bundle 'The-NERD-tree'
 
 filetype plugin indent on
 
