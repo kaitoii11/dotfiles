@@ -1,0 +1,8 @@
+google () {
+local search_string
+for i
+do
+search_string="$search_string+$i"
+done
+open http://www.google.co.jp/search\?q=$search_string\&hl=UTF-8
+}     
