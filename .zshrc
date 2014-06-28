@@ -81,7 +81,7 @@ HISTSIZE=100000
 #####prompt edit
 PS1='%F{cyan}%m%f:> '
 RPS1='[%~/%t]'
-#
+
 ##case insensitive autocomplete
 autoload -U compinit
 compinit
@@ -93,8 +93,12 @@ alias ls='ls -FG'
 alias grep='grep --color=always'
 #todo.txt
 alias t="todo.sh -d ~/.todo/todo.cfg"
+#vim
+alias vim='/opt/local/bin/vim'
+alias vi='/opt/local/bin/vim'
+alias v='/opt/local/bin/vim'
 
-##ignore logout when C-d
+#ignore logout when C-d
 setopt IGNORE_EOF
 #neglect same command fromm saving history
 setopt HIST_IGNORE_DUPS
@@ -112,7 +116,8 @@ setopt NOTIFY
 setopt AUTOCD
 #noclobber
 setopt NOCLOBBER
-
+#ad / to directory 
+setopt auto_param_slash
 
 #C-w
 WORDCHARS="*?_-.[]~=&;\!#$%^(){}<>"
