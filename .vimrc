@@ -1,3 +1,4 @@
+
 set nocompatible 
 filetype off
 filetype plugin indent off
@@ -13,10 +14,10 @@ NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neocomplchache-snippets-complet'
+NeoBundle 'Shougo/neocomplcache-snippets-complet'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'nathanaelakne/vim-indent-guide'
+NeoBundle 'nathanaelkane/vim-indent-guides'
 
 filetype on
 filetype plugin indent on
@@ -31,11 +32,16 @@ set showmode "showmode
 set ruler
 set showcmd
 set showmatch
+set hlsearch
 set cursorline
 set wildmenu
 set title
 set backspace=indent,eol,start
-set tabstop=4
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set nocp 
+
 
 "search
 set ignorecase
@@ -44,6 +50,7 @@ set wrapscan
 
 "display
 syntax on
+colorscheme koehler
 set autoindent
 set smartindent
 set smarttab
@@ -126,5 +133,18 @@ inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-e> neocomplcache#cancel_popup() " "
 
 
-" vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
-let g:indent_guides_enable_on_vim_startup = 1
+"vim indent guide
+" vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
+let g:indent_guides_enable_on_vim_startup=1
+" ガイドをスタートするインデントの量
+let g:indent_guides_start_level=1
+" 自動カラーを無効にする
+let g:indent_guides_auto_colors=0
+" 奇数インデントのカラー
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626  ctermbg=gray
+" " 偶数インデントのカラー
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+" " ハイライト色の変化の幅
+let g:indent_guides_color_change_percent = 30
+" ガイドの幅
+"let g:indent_guides_guide_size = 1

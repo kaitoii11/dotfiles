@@ -1,4 +1,5 @@
-export PATH="$PATH:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/lib"
+ZDOTDIR=$HOME/.zsh
 
+export PATH="$PATH:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/lib"
 
 

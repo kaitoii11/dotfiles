@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=$ZDOTDIR/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -73,9 +73,12 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+#alias
+source $ZDOTDIR/.zshaliases
+
 #USER zshrc
 AVEHIST=100000
-HISTFILE=~/.zhistory
+HISTFILE=$ZDOTDIR/.zhistory
 HISTSIZE=100000
 
 #####prompt edit
@@ -86,17 +89,6 @@ RPS1='[%~/%t]'
 autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-#alias
-alias gcc='gcc -Wall -g'
-alias ls='ls -FG'
-alias grep='grep --color=always'
-#todo.txt
-alias t="todo.sh -d ~/.todo/todo.cfg"
-#vim
-alias vim='/opt/local/bin/vim'
-alias vi='/opt/local/bin/vim'
-alias v='/opt/local/bin/vim'
 
 #ignore logout when C-d
 setopt IGNORE_EOF
@@ -135,9 +127,11 @@ READNULLCMD='less'
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
-#
 #autoload functions
-fpath=(~/.func $fpath)
+fpath=($ZDOTDIR/.func $fpath)
 autoload ${fpath[1]}/*(:t)
 
+#rupa/z
+_Z_CMD=j
+source $ZDOTDIR/z/z.sh
 
