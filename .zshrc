@@ -1,5 +1,5 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$ZDOTDIR/.oh-my-zsh
+  # Path to your oh-my-zsh installation.
+  export ZSH=$ZDOTDIR/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -135,3 +135,6 @@ autoload ${fpath[1]}/*(:t)
 _Z_CMD=j
 source $ZDOTDIR/z/z.sh
 
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi

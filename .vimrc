@@ -1,4 +1,3 @@
-
 set nocompatible 
 filetype off
 filetype plugin indent off
@@ -41,7 +40,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set nocp 
-
+set whichwrap=b,s,h,l,<,>,[,],~
+set mouse=a
 
 "search
 set ignorecase
@@ -55,7 +55,7 @@ set autoindent
 set smartindent
 set smarttab
 set expandtab
-
+set cindent
 
 "enable mouse
 if has("mouse") " Enable the use of the mouse in all modes
@@ -82,12 +82,11 @@ inoremap (<Enter> ()<Left><CR><ESC><S-o>
 " 補完ウィンドウの設定
  set completeopt=menuone
  " 起動時に有効化
-  let g:neocomplcache_enable_at_startup = 1          
+let g:neocomplcache_enable_at_startup = 1          
 " 大文字が入力されるまで大文字小文字の区別を無視する
 let g:neocomplcache_enable_smart_case = 1
 " _(アンダースコア)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 1
-     
+let g:neocomplcache_enable_underbar_completion = 1 
 let g:neocomplcache_enable_camel_case_completion  =  1
  
 " ポップアップメニューで表示される候補の数
@@ -148,3 +147,16 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgr
 let g:indent_guides_color_change_percent = 30
 " ガイドの幅
 "let g:indent_guides_guide_size = 1
+
+"syntastic
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=2
+let g:syntastic_mode_map = {'mode': 'passive'} 
+augroup AutoSyntastic
+  autocmd!
+  autocmd InsertLeave,TextChanged * call s:syntastic() 
+augroup END
+function! s:syntastic()
+  w
+  SyntasticCheck
+endfunction
