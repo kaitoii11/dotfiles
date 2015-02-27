@@ -17,6 +17,12 @@ NeoBundle 'Shougo/neocomplcache-snippets-complet'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim', {
+  \ 'depends' : 'Shougo/unite.vim'
+  \ }
+NeoBundle 'lervag/vim-latex'
 
 filetype on
 filetype plugin indent on
@@ -40,7 +46,7 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 set nocp 
-set whichwrap=b,s,h,l,<,>,[,],~
+set whichwrap=b,s,h,l,<,>,[,],~ 
 set mouse=a
 
 "search
@@ -62,8 +68,8 @@ if has("mouse") " Enable the use of the mouse in all modes
   set mouse=a
   endif
 "parantheses match
-"inoremap " ""
-"inoremap ' ''
+inoremap " ""
+inoremap ' ''
 vnoremap { "zdi{z}
 vnoremap {" "zdi{"z"}
 vnoremap {' "zdi{'z'}
@@ -160,3 +166,57 @@ function! s:syntastic()
   w
   SyntasticCheck
 endfunction
+
+"nerdtree:
+" 隠しファイルをデフォルトで表示させる
+let NERDTreeShowHidden = 1
+"
+autocmd vimenter * if !argc() | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeMinimalUI=1
+let g:NERDTreeDirArrows=0
+let g:NERDTreeMouseMode=2
+
+
+" unite {{{
+let g:unite_enable_start_insert=1
+nmap <silent> <C-u><C-b> :<C-u>Unite buffer<CR>
+nmap <silent> <C-u><C-f> :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nmap <silent> <C-u><C-r> :<C-u>Unite -buffer-name=register register<CR>
+nmap <silent> <C-u><C-m> :<C-u>Unite file_mru<CR>
+nmap <silent> <C-u><C-u> :<C-u>Unite buffer file_mru<CR>
+nmap <silent> <C-u><C-a> :<C-u>UniteWithBufferDir -buffer-name=files buffer
+nmap <silent> <C-u><C-u> :<C-u>Unite buffer file_mru bookmark file<CR>
+au FileType unite nmap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+au FileType unite nmap <silent> <buffer> <expr> <C-j> unite#do_action('vplit')
+au FileType unite nmap <silent> <buffer> <expr> <C-l> unite#do_action('split')
+au FileType unite nmap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
+au FileType unite nmap <silent> <buffer> <ESC><ESC> q
+au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
+" }}}
+" }}
+
+" vim-latex
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+"自動折りたたみ無効
+let g:TeX_AutoFolding = 0 
+let g:Tex_Folding = 0 
+let g:Imap_UsePlaceHolders = 1 
+let g:Imap_DeleteEmptyPlaceHolders = 1 
+let g:Imap_StickyPlaceHolders = 0 
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+let g:Tex_FormatDependency_ps = 'dvi,ps'
+let g:Tex_MultipleCompileFormats = 'pdf'
+let g:Tex_CompileRule_dvi = 'uplatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
+let g:Tex_CompileRule_ps = 'dvips -Ppdf -o $*.ps $*.dvi'
+let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi' 
+let g:Tex_BibtexFlavor = 'upbibtex'
+let g:Tex_MakeIndexFlavor = 'mendex -U $*.idx'
+let g:Tex_UseEditorSettingInDVIViewer = 1 
+let g:Tex_ViewRule_pdf = 'open -a Preview.app'
+let g:Tex_ViewRule_ps = 'open'
+let g:Tex_ViewRule_dvi = 'open'
+"

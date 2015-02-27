@@ -5,7 +5,8 @@
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
+ZSH_THEME="ys"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -15,7 +16,7 @@ ZSH_THEME="agnoster"
 # CASE_SENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -55,7 +56,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -83,12 +84,16 @@ HISTSIZE=100000
 
 #####prompt edit
 PS1='%F{cyan}%m%f:> '
-RPS1='[%~/%t]'
+RPS1='[%~ %F{red}%t%f ]'
 
 ##case insensitive autocomplete
 autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+##zmv 
+autoload -U zmv
+
 
 #ignore logout when C-d
 setopt IGNORE_EOF
@@ -124,17 +129,24 @@ LISTMAX=0
 READNULLCMD='less'
 
 #keybind
-bindkey "^P" history-beginning-search-backward-end
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end 
 bindkey "^N" history-beginning-search-forward-end
-
 #autoload functions
 fpath=($ZDOTDIR/.func $fpath)
 autoload ${fpath[1]}/*(:t)
 
-#rupa/z
-_Z_CMD=j
-source $ZDOTDIR/z/z.sh
-
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+export LESS='-R'
+export LESSOPEN='|/opt/local/bin/src-hilite-lesspipe.sh %s'
+
+
+export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
+if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
+      . /opt/local/etc/profile.d/autojump.zsh
+    fi 
