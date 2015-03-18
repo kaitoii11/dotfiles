@@ -1,14 +1,14 @@
   # Path to your oh-my-zsh installation.
   export ZSH=$ZDOTDIR/.oh-my-zsh
 
-# Set name of the theme to load.
+# Set name of the  to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="agnoster"
 ZSH_THEME="ys"
 
-# Example aliases
+# Example a
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
@@ -150,3 +150,15 @@ export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
 if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
       . /opt/local/etc/profile.d/autojump.zsh
     fi 
+
+man() {
+          env \
+                            LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+                                            LESS_TERMCAP_md=$(printf "\e[1;36m") \
+                                                            LESS_TERMCAP_me=$(printf "\e[0m") \
+                                                                            LESS_TERMCAP_se=$(printf "\e[0m") \
+                                                                                            LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+                                                                                                            LESS_TERMCAP_ue=$(printf "\e[0m") \
+                                                                                                                            LESS_TERMCAP_us=$(printf "\e[1;32m") \
+                                                                                                                                            man "$@"
+}

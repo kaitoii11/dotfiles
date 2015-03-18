@@ -23,6 +23,9 @@ NeoBundle 'Shougo/neomru.vim', {
   \ 'depends' : 'Shougo/unite.vim'
   \ }
 NeoBundle 'lervag/vim-latex'
+NeoBundle 'jceb/vim-hier'
+NeoBundle 'osyo-manga/vim-watchdogs'
+NeoBundle 'osyo-manga/shabadou.vim'
 
 filetype on
 filetype plugin indent on
@@ -82,8 +85,6 @@ vnoremap (' "zdi('z')
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
-
-
 
 " 補完ウィンドウの設定
  set completeopt=menuone
@@ -152,7 +153,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgr
 " " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
 " ガイドの幅
-"let g:indent_guides_guide_size = 1
+let g:indent_guides_guide_size = 1
 
 "syntastic
 let g:syntastic_enable_signs=1
@@ -219,4 +220,5 @@ let g:Tex_UseEditorSettingInDVIViewer = 1
 let g:Tex_ViewRule_pdf = 'open -a Preview.app'
 let g:Tex_ViewRule_ps = 'open'
 let g:Tex_ViewRule_dvi = 'open'
-"
+
+

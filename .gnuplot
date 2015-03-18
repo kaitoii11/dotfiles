@@ -6,4 +6,3 @@ set key font "Lucida-Grande,16"
 set label font "Lucida-Grande,18"
 set title font "Lucida-Grande,34"
 set zeroaxis lw 3
- 
