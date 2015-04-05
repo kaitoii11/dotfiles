@@ -26,6 +26,7 @@ NeoBundle 'lervag/vim-latex'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'autodate.vim'
 
 filetype on
 filetype plugin indent on
@@ -60,7 +61,7 @@ set wrapscan
 "display
 syntax on
 colorscheme koehler
-set autoindent
+"set autoindent
 set smartindent
 set smarttab
 set expandtab
@@ -139,7 +140,6 @@ inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-e> neocomplcache#cancel_popup() " "
 
 
-"vim indent guide
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup=1
 " ガイドをスタートするインデントの量
@@ -221,4 +221,5 @@ let g:Tex_ViewRule_pdf = 'open -a Preview.app'
 let g:Tex_ViewRule_ps = 'open'
 let g:Tex_ViewRule_dvi = 'open'
 
-
+"Auto-date
+let b:autodate_format = '%Y/%m/%d'

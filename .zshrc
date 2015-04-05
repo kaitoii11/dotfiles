@@ -5,7 +5,6 @@
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="agnoster"
 ZSH_THEME="ys"
 
 # Example a
@@ -56,7 +55,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export MANPATH="/usr/local/man:$MANPATH"
+#export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -78,7 +77,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 source $ZDOTDIR/.zshaliases
 
 #USER zshrc
-AVEHIST=100000
+SAVEHIST=100000
 HISTFILE=$ZDOTDIR/.zhistory
 HISTSIZE=100000
 
@@ -113,8 +112,9 @@ setopt NOTIFY
 setopt AUTOCD
 #noclobber
 setopt NOCLOBBER
-#ad / to directory 
+#add / to directory 
 setopt auto_param_slash
+setopt EXTENDED_GLOB
 
 #C-w
 WORDCHARS="*?_-.[]~=&;\!#$%^(){}<>"
@@ -129,11 +129,12 @@ LISTMAX=0
 READNULLCMD='less'
 
 #keybind
-autoload history-search-end
+autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end 
 bindkey "^N" history-beginning-search-forward-end
+
 #autoload functions
 fpath=($ZDOTDIR/.func $fpath)
 autoload ${fpath[1]}/*(:t)
@@ -153,7 +154,7 @@ if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
 
 man() {
           env \
-                            LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+                           LESS_TERMCAP_mb=$(printf "\e[1;31m") \
                                             LESS_TERMCAP_md=$(printf "\e[1;36m") \
                                                             LESS_TERMCAP_me=$(printf "\e[0m") \
                                                                             LESS_TERMCAP_se=$(printf "\e[0m") \
@@ -161,4 +162,25 @@ man() {
                                                                                                             LESS_TERMCAP_ue=$(printf "\e[0m") \
                                                                                                                             LESS_TERMCAP_us=$(printf "\e[1;32m") \
                                                                                                                                             man "$@"
-}
+        }
+
+function peco-select-history() {
+    local tac
+        if which tac > /dev/null; then
+                  tac="tac"
+                      else
+                                tac="tail -r"
+                                    fi
+                                        BUFFER=$(\history -n 1 | \
+                                                  eval $tac | \
+                                                          peco --query "$LBUFFER")
+                                            CURSOR=$#BUFFER
+                                                zle clear-screen
+                                              }
+                                              zle -N peco-select-history
+                                              bindkey '^r' peco-select-history
+
+#zshrc zcompile
+if [ ~/.zsh/.zshrc -nt ~/.zsh/.zshrc.zwc ]; then
+    zcompile ~/.zshrc
+  fi 
