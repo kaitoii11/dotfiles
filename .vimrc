@@ -26,7 +26,6 @@ NeoBundle 'lervag/vim-latex'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
-NeoBundle 'autodate.vim'
 
 filetype on
 filetype plugin indent on
@@ -42,6 +41,7 @@ set ruler
 set showcmd
 set showmatch
 set hlsearch
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
 set cursorline
 set wildmenu
 set title
@@ -72,8 +72,6 @@ if has("mouse") " Enable the use of the mouse in all modes
   set mouse=a
   endif
 "parantheses match
-inoremap " ""
-inoremap ' ''
 vnoremap { "zdi{z}
 vnoremap {" "zdi{"z"}
 vnoremap {' "zdi{'z'}
@@ -104,12 +102,12 @@ let g:neocomplcache_min_syntax_length = 3
         
 " ディクショナリ定義
 let g:neocomplcache_dictionary_filetype_lists = {
-            \ 'default' : '',
-                \ 'php' : $HOME . '/.vim/dict/php.dict',
-                    \ 'ctp' : $HOME . '/.vim/dict/php.dict'
-                        \ }
+      \ 'default' : '',
+      \ 'php' : $HOME . '/.vim/dict/php.dict',
+      \ 'ctp' : $HOME . '/.vim/dict/php.dict'
+      \ }
 if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
+  let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default']= '\h\w*'
 
@@ -161,7 +159,7 @@ let g:syntastic_auto_loc_list=2
 let g:syntastic_mode_map = {'mode': 'passive'} 
 augroup AutoSyntastic
   autocmd!
-  autocmd InsertLeave,TextChanged * call s:syntastic() 
+  autocmd InsertLeave * call s:syntastic() 
 augroup END
 function! s:syntastic()
   w

@@ -11,7 +11,7 @@ ZSH_THEME="ys"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Uncomment the following line to use case-sensitive completion.
+# Uncomment the following line to use case-sensitive c]ompletion.
 # CASE_SENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
@@ -85,11 +85,16 @@ HISTSIZE=100000
 PS1='%F{cyan}%m%f:> '
 RPS1='[%~ %F{red}%t%f ]'
 
+#zsh-completions
+if [ -e /usr/local/share/zsh-completions ]; then
+  fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+
 ##case insensitive autocomplete
 autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
+zstyle ':completion:*:default' menu select=2
 ##zmv 
 autoload -U zmv
 
@@ -98,7 +103,7 @@ autoload -U zmv
 setopt IGNORE_EOF
 #neglect same command fromm saving history
 setopt HIST_IGNORE_DUPS
-##share history
+#share history
 setopt SHARE_HISTORY
 #reduce blank from history
 setopt HIST_REDUCE_BLANKS
@@ -115,7 +120,8 @@ setopt NOCLOBBER
 #add / to directory 
 setopt auto_param_slash
 setopt EXTENDED_GLOB
-
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
 #C-w
 WORDCHARS="*?_-.[]~=&;\!#$%^(){}<>"
 
@@ -152,35 +158,35 @@ if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
       . /opt/local/etc/profile.d/autojump.zsh
     fi 
 
-man() {
-          env \
-                           LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-                                            LESS_TERMCAP_md=$(printf "\e[1;36m") \
-                                                            LESS_TERMCAP_me=$(printf "\e[0m") \
-                                                                            LESS_TERMCAP_se=$(printf "\e[0m") \
-                                                                                            LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-                                                                                                            LESS_TERMCAP_ue=$(printf "\e[0m") \
-                                                                                                                            LESS_TERMCAP_us=$(printf "\e[1;32m") \
-                                                                                                                                            man "$@"
-        }
+    man() {
+      env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;36m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+        man "$@"
+    }
 
-function peco-select-history() {
+    function peco-select-history() {
     local tac
-        if which tac > /dev/null; then
-                  tac="tac"
-                      else
-                                tac="tail -r"
-                                    fi
-                                        BUFFER=$(\history -n 1 | \
-                                                  eval $tac | \
-                                                          peco --query "$LBUFFER")
-                                            CURSOR=$#BUFFER
-                                                zle clear-screen
-                                              }
-                                              zle -N peco-select-history
-                                              bindkey '^r' peco-select-history
+    if which tac > /dev/null; then
+      tac="tac"
+    else
+      tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+      eval $tac | \
+      peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+  }
+  zle -N peco-select-history
+  bindkey '^r' peco-select-history
 
-#zshrc zcompile
-if [ ~/.zsh/.zshrc -nt ~/.zsh/.zshrc.zwc ]; then
-    zcompile ~/.zshrc
+  #zshrc zcompile
+  if [ $ZDOTDIR/.zshrc -nt $ZDOTDIR/.zshrc.zwc ]; then
+    zcompile $ZDOTDIR/.zshrc
   fi 
