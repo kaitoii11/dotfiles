@@ -2,14 +2,20 @@ set nocompatible
 filetype off
 filetype plugin indent off
 
-set runtimepath+=~/.vim/neobundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/neobundle/'))
+if has('vim_starting')
+   if &compatible
+      set nocompatible " Be iMproved
+  endif 
+"Required:
+  set runtimepath+=/Users/ii/.vim/bundle/neobundle.vim/
+endif
+ "Required:
+call neobundle#begin(expand('/Users/ii/.vim/bundle'))
+" Let NeoBundle manage NeoBundle
+ "Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-call neobundle#end()
 
 "plugins
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Shougo/neocomplcache'
@@ -22,10 +28,10 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim', {
   \ 'depends' : 'Shougo/unite.vim'
   \ }
-NeoBundle 'lervag/vim-latex'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
+call neobundle#end()
 
 filetype on
 filetype plugin indent on
