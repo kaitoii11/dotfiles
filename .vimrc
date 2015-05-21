@@ -90,7 +90,6 @@ vnoremap (' "zdi('z')
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
-
 " 補完ウィンドウの設定
  set completeopt=menuone
  " 起動時に有効化

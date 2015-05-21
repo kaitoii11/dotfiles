@@ -3,6 +3,11 @@ alias gcc='gcc -Wall -g'
 alias ls='ls -FG'
 alias grep='grep --color=always'
 alias rm='del'
+if [[ -x `which colordiff` ]]; then
+  alias diff='colordiff -u'
+else
+  alias diff='diff -u'
+fi
 #emacs
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 #vim
@@ -11,8 +16,13 @@ alias vi='/opt/local/bin/vim'
 alias v='/opt/local/bin/vim'
 #opencv
 alias cv='gcc -g `pkg-config --cflags opencv --libs opencv`'
+alias cppv='g++ `pkg-config --cflags opencv --libs opencv`'
+
 #zmv
 alias zmv='noglob zmv -W'
+
+#airport
+alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 
 #
 alias cleardesktop='defaults write com.apple.finder CreateDesktop -boolean false'

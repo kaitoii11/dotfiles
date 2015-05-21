@@ -82,7 +82,14 @@ HISTFILE=$ZDOTDIR/.zhistory
 HISTSIZE=100000
 
 #####prompt edit
-PS1='%F{cyan}%m%f:> '
+if [ "$USER" = "root" ]
+then
+  pc=$RED
+else
+  pc=cyan
+fi
+
+PS1='%F{${pc}}%m%f:> '
 RPS1='[%~ %F{red}%t%f ]'
 
 #zsh-completions
@@ -144,6 +151,8 @@ bindkey "^N" history-beginning-search-forward-end
 #autoload functions
 fpath=($ZDOTDIR/.func $fpath)
 autoload ${fpath[1]}/*(:t)
+zle -N peco-tree-vim
+bindkey "^t" peco-tree-vim
 
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -189,4 +198,7 @@ if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
   #zshrc zcompile
   if [ $ZDOTDIR/.zshrc -nt $ZDOTDIR/.zshrc.zwc ]; then
     zcompile $ZDOTDIR/.zshrc
-  fi 
+  fi
+
+
+

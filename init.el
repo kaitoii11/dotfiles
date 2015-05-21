@@ -93,7 +93,7 @@
 )
 
 ;;; key bind ;;;
-(global-set-key "\C-z" 'undo) 
+;(global-set-key "\C-z" 'undo) 
 (global-set-key "\C-h" 'delete-backward-char)
 (global-set-key "\M-\C-h" 'backward-kill-word)
 (global-set-key "\M-h" 'help-for-help)
@@ -248,9 +248,9 @@
 
 (push '("\\.cc$" flymake-cc-init) flymake-allowed-file-name-masks)
 
-(add-hook 'c++-mode-hook
-          '(lambda ()
-                          (flymake-mode t)))
+;(add-hook 'c++-mode-hook
+;          '(lambda ()
+;            (flymake-mode t)))
 
 
 ;;auto-complete
