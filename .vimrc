@@ -1,18 +1,17 @@
-set nocompatible 
 filetype off
 filetype plugin indent off
 
 if has('vim_starting')
-   if &compatible
-      set nocompatible " Be iMproved
-  endif 
+  if &compatible
+     set nocompatible " Be iMproved
+   endif 
 "Required:
   set runtimepath+=/Users/ii/.vim/bundle/neobundle.vim/
 endif
- "Required:
+"Required:
 call neobundle#begin(expand('/Users/ii/.vim/bundle'))
 " Let NeoBundle manage NeoBundle
- "Required:
+"Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 "plugins
@@ -20,17 +19,26 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplcache-snippets-complet'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+  \ }
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim', {
-  \ 'depends' : 'Shougo/unite.vim'
-  \ }
+      \ 'depends' : 'Shougo/unite.vim'
+      \ }
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'terryma/vim-expand-region'
 call neobundle#end()
 
 filetype on
@@ -58,6 +66,8 @@ set expandtab
 set nocp 
 set whichwrap=b,s,h,l,<,>,[,],~ 
 set mouse=a
+"set relativenumber
+:au FocusLost * silent! wa
 
 "search
 set ignorecase
@@ -201,28 +211,30 @@ au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 " }}}
 " }}
 
-" vim-latex
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-"自動折りたたみ無効
-let g:TeX_AutoFolding = 0 
-let g:Tex_Folding = 0 
-let g:Imap_UsePlaceHolders = 1 
-let g:Imap_DeleteEmptyPlaceHolders = 1 
-let g:Imap_StickyPlaceHolders = 0 
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-let g:Tex_FormatDependency_ps = 'dvi,ps'
-let g:Tex_MultipleCompileFormats = 'pdf'
-let g:Tex_CompileRule_dvi = 'uplatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
-let g:Tex_CompileRule_ps = 'dvips -Ppdf -o $*.ps $*.dvi'
-let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi' 
-let g:Tex_BibtexFlavor = 'upbibtex'
-let g:Tex_MakeIndexFlavor = 'mendex -U $*.idx'
-let g:Tex_UseEditorSettingInDVIViewer = 1 
-let g:Tex_ViewRule_pdf = 'open -a Preview.app'
-let g:Tex_ViewRule_ps = 'open'
-let g:Tex_ViewRule_dvi = 'open'
+let g:airline_theme='powerlineish'
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_section_z=''
+let g:airline_section_b = "%t %M"
+let g:airline_section_c = ''
+let s:sep = " %{get(g:, 'airline_right_alt_sep', '')} "
+let g:airline_section_x =
+      \ "%{strlen(&fileformat)?&fileformat:''}".s:sep.
+      \ "%{strlen(&fenc)?&fenc:&enc}".s:sep.
+      \ "%{strlen(&filetype)?&filetype:'no ft'}"
+let g:airline_section_y = '%3p%%'
+let g:airline_section_z = get(g:, 'airline_linecolumn_prefix', '').'%3l:%-2v'
+let g:airline#extensions#whitespace#enabled = 0
 
-"Auto-date
-let b:autodate_format = '%Y/%m/%d'
+"region expand
+call expand_region#custom_text_objects({
+      \ "\/\\n\\n\<CR>": 1,
+      \ 'a]' :1,
+      \ 'ab' :1,
+      \ 'aB' :1,
+      \ 'ii' :0,
+      \ 'ai' :0,
+      \ })
+let g:expand_region_use_select_mode = 1
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)

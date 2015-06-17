@@ -89,7 +89,9 @@ else
   pc=cyan
 fi
 
-PS1='%F{${pc}}%m%f:> '
+local p_name="%F{${pc}}%m%f"
+local p_mark="%(?,%F{green},%F{red})%(!.#.>)%f" 
+PS1='${p_name}:${p_mark} '
 RPS1='[%~ %F{red}%t%f ]'
 
 #zsh-completions
@@ -154,8 +156,8 @@ autoload ${fpath[1]}/*(:t)
 zle -N peco-tree-vim
 bindkey "^t" peco-tree-vim
 
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 export LESS='-R'
@@ -164,33 +166,33 @@ export LESSOPEN='|/opt/local/bin/src-hilite-lesspipe.sh %s'
 
 export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
 if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
-      . /opt/local/etc/profile.d/autojump.zsh
-    fi 
+  . /opt/local/etc/profile.d/autojump.zsh
+fi 
 
-    man() {
-      env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;36m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        man "$@"
-    }
+man() {
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;36m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    man "$@"
+}
 
-    function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-      tac="tac"
-    else
-      tac="tail -r"
-    fi
-    BUFFER=$(\history -n 1 | \
-      eval $tac | \
-      peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle clear-screen
+function peco-select-history() {
+local tac
+if which tac > /dev/null; then
+  tac="tac"
+else
+  tac="tail -r"
+fi
+BUFFER=$(\history -n 1 | \
+  eval $tac | \
+  peco --query "$LBUFFER")
+CURSOR=$#BUFFER
+zle clear-screen
   }
   zle -N peco-select-history
   bindkey '^r' peco-select-history
@@ -201,4 +203,4 @@ if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
   fi
 
 
-
+  watch=(not me)
