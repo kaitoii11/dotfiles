@@ -48,7 +48,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git colorize battery)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -160,7 +160,7 @@ if [ -f $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-export LESS='-R'
+export LESS=' -N -R'
 export LESSOPEN='|/opt/local/bin/src-hilite-lesspipe.sh %s'
 
 

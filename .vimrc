@@ -39,6 +39,7 @@ NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'terryma/vim-expand-region'
+NeoBundle 'davidhalter/jedi-vim'
 call neobundle#end()
 
 filetype on
@@ -66,6 +67,7 @@ set expandtab
 set nocp 
 set whichwrap=b,s,h,l,<,>,[,],~ 
 set mouse=a
+set ignorecase
 "set relativenumber
 :au FocusLost * silent! wa
 
@@ -97,9 +99,9 @@ vnoremap [' "zdi['z']
 vnoremap ( "zdi(z)
 vnoremap (" "zdi("z")
 vnoremap (' "zdi('z')
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
+"inoremap {<Enter> {}<Left><CR><ESC><S-o>
+"inoremap [<Enter> []<Left><CR><ESC><S-o>
+"inoremap (<Enter> ()<Left><CR><ESC><S-o>
 " 補完ウィンドウの設定
  set completeopt=menuone
  " 起動時に有効化
@@ -211,9 +213,9 @@ au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 " }}}
 " }}
 
-let g:airline_theme='powerlineish'
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_theme='badwolf'
+let g:airline_left_sep=' '
+let g:airline_right_sep=' '
 let g:airline_section_z=''
 let g:airline_section_b = "%t %M"
 let g:airline_section_c = ''
@@ -238,3 +240,17 @@ call expand_region#custom_text_objects({
 let g:expand_region_use_select_mode = 1
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+
+"leader
+let mapleader = "\<Space>"
+nnoremap <Leader>w :w<CR>
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+autocmd BufNewFile *.c 0r $HOME/.vim/template/c.txt
+autocmd BufNewFile *.cpp 0r $HOME/.vim/template/cpp.txt
+autocmd BufNewFile *.py 0r $HOME/.vim/template/py.txt
