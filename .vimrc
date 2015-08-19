@@ -47,7 +47,8 @@ filetype plugin indent on
 filetype indent on 
 
 set encoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
+set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjisutf-8
+set fileformats=unix,dos,mac
 
 "setting
 set number "line
@@ -254,3 +255,4 @@ vmap <Leader>P "+P
 autocmd BufNewFile *.c 0r $HOME/.vim/template/c.txt
 autocmd BufNewFile *.cpp 0r $HOME/.vim/template/cpp.txt
 autocmd BufNewFile *.py 0r $HOME/.vim/template/py.txt
+autocmd BufNewFile Makefile 0r $HOME/.vim/template/Makefile.txt

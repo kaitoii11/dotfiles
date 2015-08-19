@@ -204,3 +204,9 @@ zle clear-screen
 
 
   watch=(not me)
+
+  #ENHANCD_FILTER=peco; export ENHANCD_FILTER
+  # enhancd 
+ # if [ -f "/Users/ii/.enhancd/zsh/enhancd.zsh" ]; then
+   # source "/Users/ii/.enhancd/zsh/enhancd.zsh"
+  #fi
