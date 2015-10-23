@@ -1,5 +1,5 @@
-  # Path to your oh-my-zsh installation.
-  export ZSH=$ZDOTDIR/.oh-my-zsh
+ # Path to your oh-my-zsh installation.
+ export ZSH=$ZDOTDIR/.oh-my-zsh
 
 # Set name of the  to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -15,7 +15,7 @@ ZSH_THEME="ys"
 # CASE_SENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+#DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -49,6 +49,9 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git colorize battery)
+
+fpath=($ZDOTDIR/.func /opt/local/share/zsh/5.1.1/functions/ $fpath)
+autoload ${fpath[1]}/*(:t)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -89,24 +92,21 @@ else
   pc=cyan
 fi
 
-local p_name="%F{${pc}}%m%f"
-local p_mark="%(?,%F{green},%F{red})%(!.#.>)%f" 
-PS1='${p_name}:${p_mark} '
-RPS1='[%~ %F{red}%t%f ]'
-
 #zsh-completions
-if [ -e /usr/local/share/zsh-completions ]; then
-  fpath=(/usr/local/share/zsh-completions $fpath)
+if [ -e /opt/local/var/macports/software/zsh-completions ]; then
+  fpath=(/opt/local/var/macports/software/zsh-completions $fpath)
 fi
 
+#autoload functions
+zle -N peco-tree-vim
+bindkey "^t" peco-tree-vim
+
 ##case insensitive autocomplete
-autoload -U compinit
-compinit
+autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=2
-##zmv 
+##zmv
 autoload -U zmv
-
 
 #ignore logout when C-d
 setopt IGNORE_EOF
@@ -126,7 +126,7 @@ setopt NOTIFY
 setopt AUTOCD
 #noclobber
 setopt NOCLOBBER
-#add / to directory 
+#add / to directory
 setopt auto_param_slash
 setopt EXTENDED_GLOB
 setopt HIST_IGNORE_ALL_DUPS
@@ -143,31 +143,29 @@ LISTMAX=0
 #READNULLCMD
 READNULLCMD='less'
 
+#prompt
+local p_mark="%(?,%F{green},%F{red})%(!.#.>)%f"
+local p_name="%F{${pc}}%m%f"
+PS1='${p_name}:${p_mark} '
+RPS1='[%~ %F{red}%t%f $(parse_git_branch)]'
+
 #keybind
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end 
+bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-
-#autoload functions
-fpath=($ZDOTDIR/.func $fpath)
-autoload ${fpath[1]}/*(:t)
-zle -N peco-tree-vim
-bindkey "^t" peco-tree-vim
-
 if [ -f $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 export LESS=' -N -R'
-export LESSOPEN='|/opt/local/bin/src-hilite-lesspipe.sh %s'
+export LESSOPEN="export LESSOPEN='|lessfilter.sh %s'"
 
-
-export FPATH="$FPATH:/opt/local/share/zsh/site-functions/"
+export FPATH="/opt/local/share/zsh/site-functions/:$FPATH "
 if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
   . /opt/local/etc/profile.d/autojump.zsh
-fi 
+fi
 
 man() {
   env \
@@ -193,20 +191,47 @@ BUFFER=$(\history -n 1 | \
   peco --query "$LBUFFER")
 CURSOR=$#BUFFER
 zle clear-screen
-  }
-  zle -N peco-select-history
-  bindkey '^r' peco-select-history
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
 
-  #zshrc zcompile
-  if [ $ZDOTDIR/.zshrc -nt $ZDOTDIR/.zshrc.zwc ]; then
-    zcompile $ZDOTDIR/.zshrc
-  fi
+#zshrc zcompile
+if [ $ZDOTDIR/.zshrc -nt $ZDOTDIR/.zshrc.zwc ]; then
+  zcompile $ZDOTDIR/.zshrc
+fi
 
+watch=(not me)\
 
-  watch=(not me)
+  # tmux auto start
+is_screen_running() {
+  # tscreen also uses this varariable.
+  [ ! -z "$WINDOW" ]
+}
+is_tmux_runnning() {
+  [ ! -z "$TMUX" ]
+}
+is_screen_or_tmux_running() {
+  is_screen_running || is_tmux_runnning
+}
+shell_has_started_interactively() {
+  [ ! -z "$PS1" ]
+}
+resolve_alias() {
+  cmd="$1"
+  while \
+    whence "$cmd" >/dev/null 2>/dev/null \
+    && [ "$(whence "$cmd")" != "$cmd" ]
+do
+  cmd=$(whence "$cmd")
+done
+echo "$cmd"
+}
 
-  #ENHANCD_FILTER=peco; export ENHANCD_FILTER
-  # enhancd 
- # if [ -f "/Users/ii/.enhancd/zsh/enhancd.zsh" ]; then
-   # source "/Users/ii/.enhancd/zsh/enhancd.zsh"
-  #fi
+if ! is_screen_or_tmux_running && shell_has_started_interactively; then
+  for cmd in tmux tscreen screen; do
+    if whence $cmd >/dev/null 2>/dev/null; then
+      $(resolve_alias "$cmd")
+      break
+    fi
+  done
+fi
