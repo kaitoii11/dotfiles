@@ -54,6 +54,7 @@ set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjisutf-8
 set fileformats=unix,dos,mac
 
+
 "setting
 set number "line
 set showmode "showmode

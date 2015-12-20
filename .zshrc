@@ -163,8 +163,8 @@ export LESS=' -N -R'
 export LESSOPEN="export LESSOPEN='|lessfilter.sh %s'"
 
 export FPATH="/opt/local/share/zsh/site-functions/:$FPATH "
-if [ -f /opt/local/etc/profile.d/autojump.zsh ]; then
-  . /opt/local/etc/profile.d/autojump.zsh
+if [ -f /opt/local/share/autojump/autojump.zsh ]; then
+  . /opt/local/share/autojump/autojump.zsh
 fi
 
 man() {
@@ -234,4 +234,3 @@ if ! is_screen_or_tmux_running && shell_has_started_interactively; then
       break
     fi
   done
-fi
