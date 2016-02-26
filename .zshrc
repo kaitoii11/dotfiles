@@ -234,3 +234,9 @@ if ! is_screen_or_tmux_running && shell_has_started_interactively; then
       break
     fi
   done
+fi
+
+#pushbullet acces token
+
+export PUSHBULLET_ACCESS_TOKEN='o.1pKv01uRKlzIAvvLkpkDm2Syfxgw0jo8'
+
