@@ -9,4 +9,5 @@ export DYLD_FALLBACK_LIBRARY_PATH="$HOME/lib:/usr/local/lib:/lib:/usr/lib:/opt/l
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
 typeset -U path PATH
 export LC_ALL="ja_JP.UTF-8"
+export EDITOR=/opt/local/bin/vim
 zmodload zsh/zprof

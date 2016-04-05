@@ -39,7 +39,8 @@ NeoBundle 'Shougo/neomru.vim', {
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'osyo-manga/shabadou.vim'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'wesleyche/srcexpl'
@@ -280,6 +281,7 @@ autocmd BufNewFile *.cpp 0r $HOME/.vim/template/cpp.txt
 autocmd BufNewFile *.py 0r $HOME/.vim/template/py.txt
 autocmd BufNewFile Makefile 0r $HOME/.vim/template/Makefile.txt
 autocmd BufNewFile *.pl 0r $HOME/.vim/template/pl.txt
+autocmd BufNewFile *.rb 0r $HOME/.vim/template/rb.txt
 " trim trailing white space on save
 autocmd BufWritePre * :%s/\s\+$//ge
 
@@ -315,3 +317,5 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+set clipboard=unnamed,autoselect

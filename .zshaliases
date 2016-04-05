@@ -27,3 +27,6 @@ alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/C
 #
 alias cleardesktop='defaults write com.apple.finder CreateDesktop -boolean false'
 alias appeardesktop='defaults write com.apple.finder CreateDesktop -boolean true'
+
+# ssh with xterm
+alias ssh='TERM=xterm ssh'

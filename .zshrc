@@ -145,7 +145,7 @@ READNULLCMD='less'
 
 #prompt
 local p_mark="%(?,%F{green},%F{red})%(!.#.>)%f"
-local p_name="%F{${pc}}%m%f"
+local p_name="%F{${pc}}%n%f"
 PS1='${p_name}:${p_mark} '
 RPS1='[%~ %F{red}%t%f $(parse_git_branch)]'
 
@@ -240,3 +240,14 @@ fi
 
 export PUSHBULLET_ACCESS_TOKEN='o.1pKv01uRKlzIAvvLkpkDm2Syfxgw0jo8'
 
+# go Path
+export GOPATH='${HOME}/tests/go'
+
+# auto-fu
+source $ZDOTDIR/auto-fu.zsh/auto-fu.zsh
+function zle-line-init(){
+  auto-fu-init
+}
+zle -N zle-line-init
+# 「-azfu-」を表示させないための記述
+zstyle ':auto-fu:var' postdisplay $''
