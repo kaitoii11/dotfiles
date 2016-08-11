@@ -97,6 +97,10 @@ if [ -e /opt/local/var/macports/software/zsh-completions ]; then
   fpath=(/opt/local/var/macports/software/zsh-completions $fpath)
 fi
 
+if [ -e /opt/local/share/zsh/5.2/functions ]; then
+  fpath=(/opt/local/share/zsh/5.2/functions $fpath)
+fi
+
 #autoload functions
 zle -N peco-tree-vim
 bindkey "^t" peco-tree-vim
@@ -244,10 +248,10 @@ export PUSHBULLET_ACCESS_TOKEN='o.1pKv01uRKlzIAvvLkpkDm2Syfxgw0jo8'
 export GOPATH='${HOME}/tests/go'
 
 # auto-fu
-source $ZDOTDIR/auto-fu.zsh/auto-fu.zsh
-function zle-line-init(){
-  auto-fu-init
-}
+#source $ZDOTDIR/auto-fu.zsh/auto-fu.zsh
+#function zle-line-init(){
+#  auto-fu-init
+#}
 zle -N zle-line-init
 # 「-azfu-」を表示させないための記述
-zstyle ':auto-fu:var' postdisplay $''
+#zstyle ':auto-fu:var' postdisplay $''
