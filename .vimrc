@@ -1,56 +1,57 @@
-filetype off
-filetype plugin indent off
-
-if has('vim_starting')
-  if &compatible
-     set nocompatible " Be iMproved
-   endif
-"Required:
-  set runtimepath+=/Users/ii/.vim/bundle/neobundle.vim/
+if !&compatible
+  set nocompatible
 endif
-"Required:
-call neobundle#begin(expand('/Users/ii/.vim/bundle'))
-" Let NeoBundle manage NeoBundle
-"Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-"plugins
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'thinca/vim-quickrun'
-"NeoBundle 'Shougo/neocomplcache'
-"NeoBundle 'Shougo/neocomplcache-snippets-complet'
-NeoBundle "Shougo/neocomplete.vim"
-NeoBundle "Shougo/neosnippet.vim"
-NeoBundle "Shougo/neosnippet-snippets.vim"
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru.vim', {
-      \ 'depends' : 'Shougo/unite.vim'
-      \ }
-NeoBundle 'jceb/vim-hier'
-NeoBundle 'osyo-manga/vim-watchdogs'
-NeoBundle 'osyo-manga/shabadou.vim'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'terryma/vim-expand-region'
-NeoBundle 'davidhalter/jedi-vim'
-NeoBundle 'wesleyche/srcexpl'
-NeoBundle 'vim-scripts/taglist.vim'
-NeoBundle 'szw/vim-tags'
-NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'Shougo/vimfiler'
-call neobundle#end()
+
+" reset augroup
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+" dein settings {{{
+set runtimepath+=~/.vim/dein.vim
+" プラグイン読み込み&キャッシュ作成
+call dein#begin(expand('~/.vim/dein'))
+call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/neosnippet')
+call dein#add('scrooloose/syntastic')
+call dein#add('thinca/vim-quickrun')
+call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('terryma/vim-multiple-cursors')
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/neomru.vim')
+call dein#add('jceb/vim-hier')
+call dein#add('osyo-manga/vim-watchdogs')
+call dein#add('osyo-manga/shabadou.vim')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('terryma/vim-expand-region')
+call dein#add('davidhalter/jedi-vim')
+call dein#add('wesleyche/srcexpl')
+call dein#add('vim-scripts/taglist.vim')
+call dein#add('szw/vim-tags')
+call dein#add('Townk/vim-autoclose')
+call dein#add('rking/ag.vim')
+call dein#add('bronson/vim-trailing-whitespace')
+call dein#add('Shougo/vimfiler')
+call dein#end()
+call dein#save_state()
+
+" 不足プラグインの自動インストール
+if has('vim_starting') && dein#check_install()
+  call dein#install()
+endif
+" }}}
+
+" 引数なしでvimを開くとNERDTreeを起動
+let file_name = expand('%')
+if has('vim_starting') &&  file_name == ''
+  autocmd VimEnter * NERDTree ./
+endif
+
+"End dein Scripts-------------------------
+
 filetype on
 filetype plugin indent on
 filetype indent on
@@ -124,58 +125,6 @@ vnoremap (' "zdi('z')
 "inoremap (<Enter> ()<Left><CR><ESC><S-o>
 " $BJd40%&%#%s%I%&$N@_Dj(B
  set completeopt=menuone
-" " $B5/F0;~$KM-8z2=(B
-"let g:neocomplcache_enable_at_startup = 1
-"" $BBgJ8;z$,F~NO$5$l$k$^$GBgJ8;z>.J8;z$N6hJL$rL5;k$9$k(B
-"let g:neocomplcache_enable_smart_case = 1
-"" _($B%"%s%@!<%9%3%"(B)$B6h@Z$j$NJd40$rM-8z2=(B
-"let g:neocomplcache_enable_underbar_completion = 1
-"let g:neocomplcache_enable_camel_case_completion  =  1
-"
-"" $B%]%C%W%"%C%W%a%K%e!<$GI=<($5$l$k8uJd$N?t(B
-"let g:neocomplcache_max_list = 20
-"" $B%7%s%?%C%/%9$r%-%c%C%7%e$9$k$H$-$N:G>.J8;zD9(B
-"let g:neocomplcache_min_syntax_length = 3
-"
-"" $B%G%#%/%7%g%J%jDj5A(B
-"let g:neocomplcache_dictionary_filetype_lists = {
-"      \ 'default' : '',
-"      \ 'php' : $HOME . '/.vim/dict/php.dict',
-"      \ 'ctp' : $HOME . '/.vim/dict/php.dict'
-"      \ }
-"if !exists('g:neocomplcache_keyword_patterns')
-"  let g:neocomplcache_keyword_patterns = {}
-"endif
-"let g:neocomplcache_keyword_patterns['default']= '\h\w*'
-"
-""$B%9%K%Z%C%H$rE83+$9$k!#%9%K%Z%C%H$,4X78$7$J$$$H$3$m$G$O9TKv$^$G:o=|(B
-"imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
-"smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
-""
-"" $BA02s9T$o$l$?Jd40$r%-%c%s%;%k$7$^$9(B
-"inoremap <expr><C-g> neocomplcache#undo_completion()
-""
-""$BJd408uJd$N$J$+$+$i!"6&DL$9$kItJ,$rJd40$7$^$9(B
-"inoremap <expr><C-l> neocomplcache#complete_common_string()
-"
-"" $B2~9T$GJd40%&%#%s%I%&$rJD$8$k(B
-"inoremap <expr><CR> neocomplcache#smart_close_popup() ."\<CR>"
-"
-""tab$B$GJd408uJd$NA*Br$r9T$&(B
-"inoremap <expr><TAB> pumvisible() ?"\<Down>" : "\<TAB>"
-"inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
-""
-""<C-h>$B$d(B<BS>$B$r2!$7$?$H$-$K3N<B$K%]%C%W%"%C%W$r:o=|$7$^$9(B
-"inoremap <expr><C-h> neocomplcache#smart_close_popup().$B!I(B\<C-h>$B!I(B
-""
-"" $B8=:_A*Br$7$F$$$k8uJd$r3NDj$7$^$9(B
-"inoremap <expr><C-y> neocomplcache#close_popup()
-""
-""$B8=:_A*Br$7$F$$$k8uJd$r%-%c%s%;%k$7!"%]%C%W%"%C%W$rJD$8$^$9(B
-"inoremap <expr><C-e> neocomplcache#cancel_popup() " "
-"" 補完候補が表示されている場合は確定。そうでない場合は改行
-"inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
-
 
 " vim$BN)$A>e$2$?$H$-$K!"<+F0E*$K(Bvim-indent-guides$B$r%*%s$K$9$k(B
 let g:indent_guides_enable_on_vim_startup=1
@@ -215,7 +164,6 @@ let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeDirArrows=0
 let g:NERDTreeMouseMode=2
-
 
 " unite {{{
 let g:unite_force_overwrite_statusline = 0
@@ -319,3 +267,10 @@ let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 set clipboard=unnamed,autoselect
+
+" markdown to tex
+augroup texfile
+  autocmd BufRead,BufNewFile *.tex set filetype=tex
+  let md_to_latex  = "pandoc --from=markdown --to=latex"
+  autocmd Filetype tex let &formatprg=md_to_latex
+augroup END
