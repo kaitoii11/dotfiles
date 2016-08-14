@@ -1,20 +1,14 @@
 if !&compatible
   set nocompatible
 endif
-
-" reset augroup
-augroup MyAutoCmd
-  autocmd!
-augroup END
-
 " dein settings {{{
 set runtimepath+=~/.vim/dein.vim
 " プラグイン読み込み&キャッシュ作成
 call dein#begin(expand('~/.vim/dein'))
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-call dein#add('Shougo/neocomplete.vim')
-call dein#add('Shougo/neosnippet')
+call dein#add('Shougo/neocomplete.vim', { 'on_i': 1 } )
+call dein#add('Shougo/neosnippet', { 'on_i': 1 } )
 call dein#add('scrooloose/syntastic')
 call dein#add('thinca/vim-quickrun')
 call dein#add('nathanaelkane/vim-indent-guides')
@@ -35,6 +29,7 @@ call dein#add('Townk/vim-autoclose')
 call dein#add('rking/ag.vim')
 call dein#add('bronson/vim-trailing-whitespace')
 call dein#add('Shougo/vimfiler')
+call dein#add('scrooloose/nerdtree')
 call dein#end()
 call dein#save_state()
 
@@ -43,12 +38,6 @@ if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
 " }}}
-
-" 引数なしでvimを開くとNERDTreeを起動
-let file_name = expand('%')
-if has('vim_starting') &&  file_name == ''
-  autocmd VimEnter * NERDTree ./
-endif
 
 "End dein Scripts-------------------------
 
@@ -155,10 +144,10 @@ function! s:syntastic()
 endfunction
 
 "nerdtree:
-" $B1#$7%U%!%$%k$r%G%U%)%k%H$GI=<($5$;$k(B
 let NERDTreeShowHidden = 1
-"
-autocmd vimenter * if !argc() | NERDTree | endif
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$']
 let g:NERDTreeMinimalUI=1
