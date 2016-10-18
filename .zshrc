@@ -78,8 +78,6 @@ setopt HIST_IGNORE_SPACE
 setopt NOTIFY
 #auto-cd
 setopt AUTOCD
-#noclobber
-setopt NOCLOBBER
 #add / to directory
 setopt auto_param_slash
 setopt EXTENDED_GLOB
@@ -191,7 +189,8 @@ if ! is_screen_or_tmux_running && shell_has_started_interactively; then
 fi
 
 # go Path
-export GOPATH='${HOME}/tests/go'
+export GOPATH="${HOME}/tests/go"
+#export PATH=$PATH:$GOPATH/bin
 
 # auto-fu
 #source $ZDOTDIR/auto-fu.zsh/auto-fu.zsh
@@ -208,3 +207,10 @@ bindkey -r '^[^D'
 
 unsetopt correct_all
 unsetopt correct
+setopt noclobber
+
+function ssh() {
+  local window_name=$(tmux display -p '#{window_name}')
+  command ssh $@
+  tmux rename-window $window_name
+}

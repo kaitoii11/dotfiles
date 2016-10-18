@@ -30,6 +30,7 @@ call dein#add('rking/ag.vim')
 call dein#add('bronson/vim-trailing-whitespace')
 call dein#add('Shougo/vimfiler')
 call dein#add('scrooloose/nerdtree')
+call dein#add('mrtazz/DoxygenToolkit.vim')
 call dein#end()
 call dein#save_state()
 
@@ -114,6 +115,8 @@ vnoremap (' "zdi('z')
 "inoremap (<Enter> ()<Left><CR><ESC><S-o>
 " 補完ウィンドウの設定
  set completeopt=menuone
+nmap <up> gk
+nmap <down> gj
 
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup=1
@@ -263,3 +266,11 @@ augroup texfile
   let md_to_latex  = "pandoc --from=markdown --to=latex"
   autocmd Filetype tex let &formatprg=md_to_latex
 augroup END
+
+" doxygen
+let g:DoxygenToolkit_briefTag_pre="@Synopsis  "
+let g:DoxygenToolkit_paramTag_pre="@Param "
+let g:DoxygenToolkit_returnTag="@Returns   "
+let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
+let g:DoxygenToolkit_authorName= "Kaito Ii"
