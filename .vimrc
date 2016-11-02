@@ -117,6 +117,7 @@ vnoremap (' "zdi('z')
  set completeopt=menuone
 nmap <up> gk
 nmap <down> gj
+imap <c-j> <esc>
 
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup=1
@@ -274,3 +275,5 @@ let g:DoxygenToolkit_returnTag="@Returns   "
 let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
 let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
 let g:DoxygenToolkit_authorName= "Kaito Ii"
+
+set noswapfile
