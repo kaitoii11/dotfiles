@@ -5,16 +5,16 @@
 ; GUIから起動されたEmacsのpathが正しくわたらないための設定
 ; 下に記述したものがPATHの先頭に追加される
 (dolist (dir (list
-              "/sbin"
-              "/usr/sbin"
-              "/bin"
-              "/usr/bin"
-              "/usr/local/bin"
-              "/opt/local/bin"
-              (expand-file-name "~/bin")
-              (expand-file-name "~/.emacs.d/bin")
-              ))
-; PATH と exec-path に同じ物を追加
+               "/sbin"
+               "/usr/sbin"
+               "/bin"
+               "/usr/bin"
+               "/usr/local/bin"
+               "/opt/local/bin"
+               (expand-file-name "~/bin")
+               (expand-file-name "~/.emacs.d/bin")
+               ))
+  ; PATH と exec-path に同じ物を追加
 (when (and (file-exists-p dir) (not (member dir exec-path)))
   (setenv "PATH" (concat dir ":" (getenv "PATH")))
   (setq exec-path (append (list dir) exec-path))))
@@ -53,10 +53,10 @@
   (set-frame-width (next-frame) 80)
   ;; メニューバーを隠す
   (tool-bar-mode -1)
-  ;; デフォルトの透明度を設定する (85%) 
-  (add-to-list 'default-frame-alist '(alpha . 85)) 
-  ;; カレントウィンドウの透明度を変更する (85%) 
-  (set-frame-parameter nil 'alpha 85) 
+  ;; デフォルトの透明度を設定する (85%)
+  (add-to-list 'default-frame-alist '(alpha . 85))
+  ;; カレントウィンドウの透明度を変更する (85%)
+  (set-frame-parameter nil 'alpha 85)
   ;;; 画像ファイルを表示する
   (auto-image-file-mode t)
   ;; Font
@@ -75,7 +75,7 @@
   ;; (set-fontset-font
   ;;   (frame-parameter nil 'font)
   ;;     'japanese-jisx0212
-  ;;     '("Hiragino Kaku Gothic ProN" . "iso10646-1")) 
+  ;;     '("Hiragino Kaku Gothic ProN" . "iso10646-1"))
   ;; (set-fontset-font
   ;;   (frame-parameter nil 'font)
   ;;     'mule-unicode-0100-24ff
@@ -93,7 +93,7 @@
 )
 
 ;;; key bind ;;;
-;(global-set-key "\C-z" 'undo) 
+;(global-set-key "\C-z" 'undo)
 (global-set-key "\C-h" 'delete-backward-char)
 (global-set-key "\M-\C-h" 'backward-kill-word)
 (global-set-key "\M-h" 'help-for-help)
@@ -105,13 +105,13 @@
 (define-key minibuffer-local-completion-map "\C-p" 'previous-history-element)
 (define-key minibuffer-local-completion-map "\C-n" 'next-history-element)
 (load-library "term/bobcat") ;;; Backspace <-> DEL ;;;
-
+(setq ns-command-modifier (quote meta))
 ;-------------------------------
 ;;; environment setting ;;;
 (setq exec-path (append exec-path '("/opt/local/bin")))
 (setq version-control nil)
 (setq default-fill-column 80)
-(setq visible-bell t)     ;;; no beep 
+(setq visible-bell t)     ;;; no beep
 (line-number-mode t)      ;;; display line number
 (setq column-number-mode t) ;;; display column number
 (setq scroll-step 1)
@@ -122,7 +122,7 @@
 (setq transient-mark-mode t) ;;; hilight copy region ;;;
 (setq-default indent-tabs-mode nil)   ;;; expand Tab to space ;;;
 (setq kill-whole-line t)  ;;; C-k behavior
-(setq next-line-add-newlines nil) ;;; C-n don't add new lines at EOF 
+(setq next-line-add-newlines nil) ;;; C-n don't add new lines at EOF
 (put 'narrow-to-region 'disabled nil) ;;; end of file ;;;
 (setq backup-inhibited t) ;; バックアップファイルを作らない
 (setq eval-expression-print-length nil) ;;; evalした結果を全部表示
@@ -223,7 +223,7 @@
 (add-hook 'yatex-mode-hook 'turn-on-reftex)
 
 ;;; FlyMake
-;;; Auto Complete Mode 
+;;; Auto Complete Mode
 ;;; http://cx4a.org/software/auto-complete/manual.ja.html#.E3.81.AF.E3.81.98.E3.82.81.E3.81.AB
 ;;; multi-term
 
@@ -236,22 +236,35 @@
 (package-initialize)
 
 ;;flymake
-(require 'flymake)
+;(require 'flymake)
 
-(defun flymake-cc-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name))))
-    (list "g++" (list "-Wall" "-Wextra" "-fsyntax-only" local-file))))
+;(defun flymake-cc-init ()
+;  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;                       'flymake-create-temp-inplace))
+;         (local-file  (file-relative-name
+;                       temp-file
+;                       (file-name-directory buffer-file-name))))
+;    (list "g++" (list "-Wall" "-Wextra" "-fsyntax-only" local-file))))
 
-(push '("\\.cc$" flymake-cc-init) flymake-allowed-file-name-masks)
+;(push '("\\.cc$" flymake-cc-init) flymake-allowed-file-name-masks)
 
 ;(add-hook 'c++-mode-hook
 ;          '(lambda ()
 ;            (flymake-mode t)))
 
+; flycheck
+(require 'flycheck)
+
+(flycheck-define-checker c/c++
+  "A C/C++ checker using g++."
+  :command ("g++" "-Wall" "-Wextra" source)
+  :error-patterns  ((error line-start
+                           (file-name) ":" line ":" column ":" " エラー: " (message)
+                           line-end)
+                    (warning line-start
+                             (file-name) ":" line ":" column ":" " 警告: " (message)
+                             line-end))
+    :modes (c-mode c++-mode))
 
 ;;auto-complete
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -263,7 +276,9 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
 (global-auto-complete-mode t)
-
+(define-key ac-completing-map (kbd "C-n") 'ac-next)
+(define-key ac-completing-map (kbd "C-p") 'ac-previous)
+(define-key ac-completing-map (kbd "C-m") 'ac-complete)
 ;;parenthesis autopair
 (require 'flex-autopair)
 (flex-autopair-mode 1)
@@ -279,7 +294,7 @@
 (add-hook 'c-mode-common-hook
         '(lambda ()
                 ;; センテンスの終了である ';' を入力したら、自動改行+インデント
-;                (c-toggle-auto-hungry-state 1) 
+;                (c-toggle-auto-hungry-state 1)
                 ;; RET キーで自動改行+インデント
                 (define-key c-mode-base-map "\C-m" 'newline-and-indent)
                  ))
@@ -301,3 +316,165 @@
   (setq save-place-file "~/.emacs.d/saved-places"))
 
 (add-hook 'after-init-hook 'global-company-mode)
+
+
+;; 全角スペースを赤ハイライト
+(global-whitespace-mode 1)
+  (setq whitespace-space-regexp "\\(\u3000\\)")
+  (setq whitespace-style '(face tabs tab-mark spaces space-mark))
+  (setq whitespace-display-mappings ())
+  (set-face-foreground 'whitespace-tab "#F1C40F")
+  (set-face-background 'whitespace-space "#E74C3C")
+
+
+;;
+;; tabbar
+;; (install-elisp "http://www.emacswiki.org/emacs/download/tabbar.el")
+;; ______________________________________________________________________
+
+(require 'tabbar)
+(tabbar-mode 1)
+
+;; タブ上でマウスホイール操作無効
+(tabbar-mwheel-mode -1)
+
+;; グループ化しない
+(setq tabbar-buffer-groups-function nil)
+
+;; 左に表示されるボタンを無効化
+(dolist (btn '(tabbar-buffer-home-button
+               tabbar-scroll-left-button
+               tabbar-scroll-right-button))
+  (set btn (cons (cons "" nil)
+                 (cons "" nil))))
+
+;; タブの長さ
+(setq tabbar-separator '(1.5))
+
+;; 外観変更
+(set-face-attribute
+ 'tabbar-default nil
+ :family "Comic Sans MS"
+ :background "black"
+ :foreground "gray72"
+ :height 1.0)
+(set-face-attribute
+ 'tabbar-unselected nil
+ :background "black"
+ :foreground "grey72"
+ :box nil)
+(set-face-attribute
+ 'tabbar-selected nil
+ :background "black"
+ :foreground "yellow"
+ :box nil)
+(set-face-attribute
+ 'tabbar-button nil
+ :box nil)
+(set-face-attribute
+ 'tabbar-separator nil
+ :height 1.5)
+
+;; タブに表示させるバッファの設定
+(defvar my-tabbar-displayed-buffers
+  '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-")
+  "*Regexps matches buffer names always included tabs.")
+
+(defun my-tabbar-buffer-list ()
+  "Return the list of buffers to show in tabs.
+Exclude buffers whose name starts with a space or an asterisk.
+The current buffer and buffers matches `my-tabbar-displayed-buffers'
+are always included."
+  (let* ((hides (list ?\  ?\*))
+         (re (regexp-opt my-tabbar-displayed-buffers))
+         (cur-buf (current-buffer))
+         (tabs (delq nil
+                     (mapcar (lambda (buf)
+                               (let ((name (buffer-name buf)))
+                                 (when (or (string-match re name)
+                                           (not (memq (aref name 0) hides)))
+                                   buf)))
+                             (buffer-list)))))
+    ;; Always include the current buffer.
+    (if (memq cur-buf tabs)
+        tabs
+      (cons cur-buf tabs))))
+
+(setq tabbar-buffer-list-function 'my-tabbar-buffer-list)
+
+;; Ctrl-Tab, Ctrl-Shift-Tab でタブを切り替える
+(dolist (func '(tabbar-mode tabbar-forward-tab tabbar-forward-group tabbar-backward-tab tabbar-backward-group))
+  (autoload func "tabbar" "Tabs at the top of buffers and easy control-tab navigation"))
+(defmacro defun-prefix-alt (name on-no-prefix on-prefix &optional do-always)
+  `(defun ,name (arg)
+     (interactive "P")
+     ,do-always
+     (if (equal nil arg)
+         ,on-no-prefix
+       ,on-prefix)))
+(defun-prefix-alt shk-tabbar-next (tabbar-forward-tab) (tabbar-forward-group) (tabbar-mode 1))
+(defun-prefix-alt shk-tabbar-prev (tabbar-backward-tab) (tabbar-backward-group) (tabbar-mode 1))
+(global-set-key [(control tab)] 'shk-tabbar-next)
+(global-set-key [(control shift tab)] 'shk-tabbar-prev)
+
+;; タブ上をマウス中クリックで kill-buffer
+(defun my-tabbar-buffer-help-on-tab (tab)
+  "Return the help string shown when mouse is onto TAB."
+  (if tabbar--buffer-show-groups
+      (let* ((tabset (tabbar-tab-tabset tab))
+             (tab (tabbar-selected-tab tabset)))
+        (format "mouse-1: switch to buffer %S in group [%s]"
+                (buffer-name (tabbar-tab-value tab)) tabset))
+    (format "\
+mouse-1: switch to buffer %S\n\
+mouse-2: kill this buffer\n\
+mouse-3: delete other windows"
+            (buffer-name (tabbar-tab-value tab)))))
+
+(defun my-tabbar-buffer-select-tab (event tab)
+  "On mouse EVENT, select TAB."
+  (let ((mouse-button (event-basic-type event))
+        (buffer (tabbar-tab-value tab)))
+    (cond
+     ((eq mouse-button 'mouse-2)
+      (with-current-buffer buffer
+        (kill-buffer)))
+     ((eq mouse-button 'mouse-3)
+      (delete-other-windows))
+     (t
+      (switch-to-buffer buffer)))
+    ;; Don't show groups.
+    (tabbar-buffer-show-groups nil)))
+
+(setq tabbar-help-on-tab-function 'my-tabbar-buffer-help-on-tab)
+(setq tabbar-select-tab-function 'my-tabbar-buffer-select-tab)
+
+
+(global-set-key "\C-cd" 'dash-at-point)
+(global-set-key "\C-ce" 'dash-at-point-with-docset)
+
+;; autoinsert
+(auto-insert-mode 1)
+(add-hook 'find-file-hooks 'auto-insert)
+(setq auto-insert-alist
+      (append '(                                  ;;テンプレートファイルのファイル名のリスト
+                ("\\.tex" . "template.tex")
+                ("\\.cpp". "template.cpp")
+                ("\\.c". "template.c")
+                ) auto-insert-alist))
+(setq auto-insert-directory "~/.emacs.d/template/")  ;;テンプレートファイルのディレクトリ
+
+;; header auto-complete
+(require 'auto-complete-c-headers)
+(add-hook 'c++-mode-hook '(setq ac-sources (append ac-sources '(ac-source-c-headers))))
+(add-hook 'c-mode-hook '(setq ac-sources (append ac-sources '(ac-source-c-headers))))
+
+; window movement
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+
+(super-save-mode +1)
+(setq super-save-auto-save-when-idle t)
+(setq auto-save-default nil)

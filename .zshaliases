@@ -30,3 +30,5 @@ alias appeardesktop='defaults write com.apple.finder CreateDesktop -boolean true
 
 # ssh with xterm
 alias ssh='TERM=xterm ssh'
+
+

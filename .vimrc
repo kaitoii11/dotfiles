@@ -2,6 +2,7 @@ if !&compatible
   set nocompatible
 endif
 " dein settings {{{
+" セッテイング
 set runtimepath+=~/.vim/dein.vim
 " プラグイン読み込み&キャッシュ作成
 call dein#begin(expand('~/.vim/dein'))
@@ -47,7 +48,7 @@ filetype plugin indent on
 filetype indent on
 
 set encoding=utf-8
-set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjisutf-8,cp932
+set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
 set fileformats=unix,dos,mac
 
 "setting
@@ -66,10 +67,8 @@ set shiftwidth=2
 set expandtab
 set nocp
 set whichwrap=b,s,h,l,<,>,[,],~
-set mouse=a
 set ignorecase
 set lazyredraw
-"set relativenumber
 :au FocusLost * silent! wa
 
 "search
@@ -99,7 +98,7 @@ set laststatus=2
 "enable mouse
 if has("mouse") " Enable the use of the mouse in all modes
   set mouse=a
-  endif
+endif
 "parantheses match
 vnoremap { "zdi{z}
 vnoremap {" "zdi{"z"}
@@ -114,7 +113,7 @@ vnoremap (' "zdi('z')
 "inoremap [<Enter> []<Left><CR><ESC><S-o>
 "inoremap (<Enter> ()<Left><CR><ESC><S-o>
 " $BJd40%&%#%s%I%&$N@_Dj(B
- set completeopt=menuone
+set completeopt=menuone
 nmap <up> gk
 nmap <down> gj
 imap <c-j> <esc>
@@ -135,9 +134,12 @@ let g:indent_guides_color_change_percent = 30
 let g:indent_guides_guide_size = 1
 
 "syntastic
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=2
-let g:syntastic_mode_map = {'mode': 'passive'}
+let g:syntastic_mode_map = {'mode': 'passive',
+                            \'active_filetypes': ['python'],
+                            \'passive_filetypes':[]}
 augroup AutoSyntastic
   autocmd!
   autocmd InsertLeave * call s:syntastic()
@@ -230,7 +232,6 @@ autocmd BufWritePre * :%s/\s\+$//ge
 let g:SrcExpl_UpdateTags = 1
 let g:SrcExpl_RefreshTime = 1
 let g:SrcExpl_UpdateTags = 1
-
 " taglist
 set tags=tags
 let Tlist_Ctags_Cmd = "/opt/local/bin/ctags"
@@ -259,8 +260,6 @@ endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-set clipboard=unnamed,autoselect
-
 " markdown to tex
 augroup texfile
   autocmd BufRead,BufNewFile *.tex set filetype=tex
@@ -277,3 +276,6 @@ let g:DoxygenToolkit_blockFooter="----------------------------------------------
 let g:DoxygenToolkit_authorName= "Kaito Ii"
 
 set noswapfile
+autocmd BufLeave,FocusLost * silent! wall
+
+set clipboard=unnamed,autoselect

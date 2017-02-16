@@ -95,12 +95,6 @@ LISTMAX=0
 #READNULLCMD
 READNULLCMD='less'
 
-#prompt
-#local p_mark="%(?,%F{green},%F{red})%(!.#.>)%f"
-#local p_name="%F{${pc}}%n%f"
-#export PS1='${p_name}:${p_mark} '
-#export RPS1='[%~ %F{red}%t%f $(parse_git_branch)]'
-
 #keybind
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -111,7 +105,7 @@ if [ -f $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-export LESS=' -N -R'
+export LESS='-i -N -R -g'
 export LESSOPEN="export LESSOPEN='|lessfilter.sh %s'"
 
 export FPATH="/opt/local/share/zsh/site-functions/:$FPATH "
@@ -214,3 +208,7 @@ function ssh() {
   command ssh $@
   tmux rename-window $window_name
 }
+
+#export WORKON_HOME=$HOME/.virtualenvs
+#export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+
