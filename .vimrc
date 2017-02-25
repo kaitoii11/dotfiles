@@ -114,6 +114,8 @@ vnoremap (' "zdi('z')
 "inoremap (<Enter> ()<Left><CR><ESC><S-o>
 " 補完ウィンドウの設定
 set completeopt=menuone
+nnoremap j gj
+nnoremap k gk
 nmap <up> gk
 nmap <down> gj
 imap <c-j> <esc>
