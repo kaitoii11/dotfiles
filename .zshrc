@@ -47,8 +47,8 @@ if [ -e /opt/local/var/macports/software/zsh-completions ]; then
   fpath=(/opt/local/var/macports/software/zsh-completions $fpath)
 fi
 
-if [ -e /opt/local/share/zsh/5.2/functions ]; then
-  fpath=(/opt/local/share/zsh/5.2/functions $fpath)
+if [ -e /opt/local/share/zsh/${ZSH_VERSION}/functions ]; then
+  fpath=(/opt/local/share/zsh/${ZSH_VERSION}/functions $fpath)
 fi
 
 #autoload functions

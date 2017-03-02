@@ -11,9 +11,15 @@ fi
 #emacs
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 #vim
-alias vim='/opt/local/bin/vim'
-alias vi='/opt/local/bin/vim'
-alias v='/opt/local/bin/vim'
+if [ -e /opt/local/bin/vim  ]; then
+  alias vim='/opt/local/bin/vim'
+  alias vi='/opt/local/bin/vim'
+  alias v='/opt/local/bin/vim'
+else
+  alias vim='/usr/bin/vim'
+  alias vi='/usr/bin/vim'
+  alias v='/usr/bin/vim'
+fi
 #opencv
 alias cv='gcc -g `pkg-config --cflags opencv --libs opencv`'
 alias cppv='g++ `pkg-config --cflags --libs opencv`'
