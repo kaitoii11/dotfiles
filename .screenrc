@@ -1,0 +1,6 @@
+# don't show startup message.
+startup_message off
+autodetach on
+defscrollback 10000
+hardstatus on
+hardstatus alwayslastline "%`%-w%{=b gw}%n %t%{-}%+w"
