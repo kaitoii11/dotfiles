@@ -7,7 +7,7 @@ else
   export PYTHONPATH="/usr/bin/python"
 fi
 export PATH="/opt/local/bin:/usr/local/bin:/opt/local/sbin:/opt/local/lib:/usr/local/lib:/opt/local/include:$PATH"
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk/Contents/Home"
+export JAVA_HOME=$(/usr/libexec/java_home)
 export MANPATH="/opt/local/share/man:/usr/local/man:/opt/local/man:$MANPATH"
 export DYLD_FALLBACK_LIBRARY_PATH="$HOME/lib:/usr/local/lib:/lib:/usr/lib:/opt/local/lib"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
