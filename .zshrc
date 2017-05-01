@@ -3,8 +3,14 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 export PATH="/opt/local/bin:/usr/local/bin:/opt/local/sbin:/usr/local/lib:/opt/local/include:$PATH"
 
-fpath=($ZDOTDIR/.func /opt/local/share/zsh/5.2/functions/ $fpath)
+if [ -d "$ZDOTDIR/.func" ]; then
+  fpath=($ZDOTDIR/.func $fpath)
 autoload ${fpath[1]}/*(:t)
+fi
+
+if [ -d "/opt/local/share/zsh/${ZSH_VERSION}/functions" ]; then
+  fpath=(/opt/local/share/zsh/${ZSH_VESION}/functions/ $fpath)
+fi
 
 # User configuration
 
@@ -212,3 +218,8 @@ function ssh() {
 #export WORKON_HOME=$HOME/.virtualenvs
 #export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 
+if [ -e /usr/bin/xsel ]; then
+  alias pbcopy='xsel --clipboard --input'
+  alias pbpaste='xsel --clipboard --output'
+  alias tmux-copy='tmux save-buffer - | pbcopy'
+fi
