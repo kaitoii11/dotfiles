@@ -2,14 +2,21 @@
 alias gcc='gcc -Wall -g'
 alias ls='ls -FG'
 alias grep='grep --color=always'
-alias rm='del'
+if [[ -f 'del' ]];
+then
+  alias rm='del'
+fi
+
 if [[ -x `which colordiff` ]]; then
   alias diff='colordiff -u'
 else
   alias diff='diff -u'
 fi
-#emacs
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+#Emacs.app
+if [[ -f '/Application/Emacs.app/Contents/MacOS/Emacs' ]]; then
+  alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+fi
+
 #vim
 if [ -e /opt/local/bin/vim  ]; then
   alias vim='/opt/local/bin/vim'
@@ -27,12 +34,15 @@ alias cppv='g++ `pkg-config --cflags --libs opencv`'
 #zmv
 alias zmv='noglob zmv -W'
 
-#airport
-alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
+if [[ "$OPTYPE" == "darwin"* ]];
+then
+  #airport
+  alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
 
-#
-alias cleardesktop='defaults write com.apple.finder CreateDesktop -boolean false'
-alias appeardesktop='defaults write com.apple.finder CreateDesktop -boolean true'
+  #
+  alias cleardesktop='defaults write com.apple.finder CreateDesktop -boolean false'
+  alias appeardesktop='defaults write com.apple.finder CreateDesktop -boolean true'
+fi
 
 # ssh with xterm
 alias ssh='TERM=xterm ssh'
