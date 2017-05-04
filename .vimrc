@@ -261,6 +261,7 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:neocomplcache_temporary_dir="$HOME/.vim/tmp/neocomplcache"
 
 " markdown to tex
 augroup texfile
