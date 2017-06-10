@@ -9,7 +9,7 @@ autoload ${fpath[1]}/*(:t)
 fi
 
 if [ -d "/opt/local/share/zsh/${ZSH_VERSION}/functions" ]; then
-  fpath=(/opt/local/share/zsh/${ZSH_VESION}/functions/ $fpath)
+  fpath=(/opt/local/share/zsh/${ZSH_VERSION}/functions/ $fpath)
 fi
 
 # User configuration
@@ -223,3 +223,8 @@ if [ -e /usr/bin/xsel ]; then
   alias pbpaste='xsel --clipboard --output'
   alias tmux-copy='tmux save-buffer - | pbcopy'
 fi
+
+# virtualenv
+export WORKON_HOME=$HOME/.virtualenvs
+source /opt/local/bin/virtualenvwrapper.sh-2.7
+
