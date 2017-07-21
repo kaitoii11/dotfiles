@@ -11,14 +11,16 @@ HISTSIZE=100000
 HISTFILESIZE=2000
 
 #update values of LINES and COLUMNS
-shopt -s checkwinseize
+shopt -s checkwinsize
 
 export EDITOR=vim
 
 # pyenv setting
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if [[ -x "$(command -v pyenv)" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
 
 if [ -e /usr/bin/xsel ]; then
   alias pbcopy='xsel --clipboard --input'
@@ -32,7 +34,7 @@ alias gcc='gcc -Wall -g'
 alias ls='ls -FG'
 alias grep='grep --color=always'
 alias rm='del'
-if [[ -x `which colordiff` ]]; then
+if [[ -x "$(command -v colordiff)" ]]; then
   alias diff='colordiff -u'
 else
   alias diff='diff -u'
