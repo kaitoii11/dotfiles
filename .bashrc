@@ -33,7 +33,9 @@ fi
 alias gcc='gcc -Wall -g'
 alias ls='ls -FG'
 alias grep='grep --color=always'
+if [[ -x $(command -v del) ]]; then
 alias rm='del'
+fi
 if [[ -x "$(command -v colordiff)" ]]; then
   alias diff='colordiff -u'
 else
@@ -42,7 +44,7 @@ fi
 #emacs
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 #vim
-if [ -e /opt/local/bin/vim  ]; then
+if [[ -e /opt/local/bin/vim ]]; then
   alias vim='/opt/local/bin/vim'
   alias vi='/opt/local/bin/vim'
   alias v='/opt/local/bin/vim'
@@ -50,4 +52,9 @@ else
   alias vim='/usr/bin/vim'
   alias vi='/usr/bin/vim'
   alias v='/usr/bin/vim'
+fi
+
+if [[ -e /usr/bin/virtualenvwrapper.sh ]]; then
+  source /usr/bin/virtualenvwrapper.sh
+  export WORKON_HOME=~/.virtualenvs
 fi
