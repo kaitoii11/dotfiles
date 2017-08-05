@@ -210,14 +210,14 @@ unsetopt correct
 setopt noclobber
 
 function ssh() {
-  local window_name=$(tmux display -p '#{window_name}')
-  command ssh $@
-  tmux rename-window $window_name
+  if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+    tmux rename-window ${@: -1} # <---- ここ
+    command ssh "$@"
+    tmux set-window-option automatic-rename "on" 1>/dev/null
+  else
+    command ssh "$@"
+  fi
 }
-
-#export WORKON_HOME=$HOME/.virtualenvs
-#export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
-
 if [ -e /usr/bin/xsel ]; then
   alias pbcopy='xsel --clipboard --input'
   alias pbpaste='xsel --clipboard --output'
@@ -225,6 +225,8 @@ if [ -e /usr/bin/xsel ]; then
 fi
 
 # virtualenv
-export WORKON_HOME=$HOME/.virtualenvs
-source /opt/local/bin/virtualenvwrapper.sh-2.7
 
+export WORKON_HOME=$HOME/.virtualenvs
+if [ -e /opt/local/bin/virtualenvwrapper.sh-2.7 ]; then
+  source /opt/local/bin/virtualenvwrapper.sh-2.7
+fi
