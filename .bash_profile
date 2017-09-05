@@ -24,7 +24,11 @@ reset="\[$(tput sgr0)\]"
 ### prompt
 function prompt() {
   # Most part of this implementation is taken from: https://superuser.com/questions/187455/right-align-part-of-prompt/1203400#1203400
-  PS1="${reset}\u[${cyan}\h${reset}] "
+  if [ $? != 0 ]; then
+    PS1="${reset}\u[${red}\h${reset}] "
+  else
+    PS1="${reset}\u[${cyan}\h${reset}] "
+  fi
   # Create a string like:  "[ ~/Downloads ]" with $PWD in GREEN
   mydir=$(echo $PWD | sed -e "s,^$HOME,~,")
   printf -v PS1RHS "\e[0m[ \e[0;1;32m$mydir \e[0m]"
