@@ -52,6 +52,6 @@ function prompt() {
   PS1="\[${Save}\e[${COLUMNS}C\e[${#PS1RHS_stripped}D${PS1RHS}${Rest}\]${PS1}"
 }
 
-PROMPT_COMMAND=prompt.
+PROMPT_COMMAND=prompt
 
 # script ${log_archive_directory}/$(date +%Y%m%d_%H%M%S)_$(whoami).log
