@@ -41,8 +41,6 @@ if [[ -x "$(command -v colordiff)" ]]; then
 else
   alias diff='diff -u'
 fi
-#emacs
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 #vim
 if [[ -e /opt/local/bin/vim ]]; then
   alias vim='/opt/local/bin/vim'
