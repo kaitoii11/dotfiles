@@ -49,6 +49,7 @@ filetype indent on
 
 set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
+scriptencoding utf-8
 set fileformats=unix,dos,mac
 
 "setting
@@ -212,7 +213,10 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 "leader
-let mapleader = "\<Space>"
+noremap <Leader>      <Nop>
+noremap <LocalLeader> <Nop>
+let g:mapleader = "\<Space>"
+let g:maplocalleader = '\'"
 nnoremap <Leader>w :w<CR>
 vmap <Leader>y "+y
 vmap <Leader>d "+d
@@ -263,22 +267,13 @@ let g:neocomplete#keyword_patterns._ = '\h\w*'
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:neocomplcache_temporary_dir="$HOME/.vim/tmp/neocomplcache"
 
-" markdown to tex
-augroup texfile
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
-  let md_to_latex  = "pandoc --from=markdown --to=latex"
-  autocmd Filetype tex let &formatprg=md_to_latex
-augroup END
-
-" doxygen
-let g:DoxygenToolkit_briefTag_pre="@Synopsis  "
-let g:DoxygenToolkit_paramTag_pre="@Param "
-let g:DoxygenToolkit_returnTag="@Returns   "
-let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
-let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
-let g:DoxygenToolkit_authorName= "Kaito Ii"
-
 set noswapfile
 autocmd BufLeave,FocusLost * silent! wall
 
-set clipboard=unnamed,autoselect
+if has('win32') || has('win64') || has('mac')
+  set clipboard=unnamed
+else
+  set clipboard=unnamed,unnamedplus
+endif
+
+set secure

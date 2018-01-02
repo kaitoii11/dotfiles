@@ -5,11 +5,16 @@ export PATH="/opt/local/bin:/usr/local/bin:/opt/local/sbin:/usr/local/lib:/opt/l
 
 if [ -d "$ZDOTDIR/.func" ]; then
   fpath=($ZDOTDIR/.func $fpath)
-autoload ${fpath[1]}/*(:t)
+  autoload ${fpath[1]}/*(:t)
 fi
 
 if [ -d "/opt/local/share/zsh/${ZSH_VERSION}/functions" ]; then
   fpath=(/opt/local/share/zsh/${ZSH_VERSION}/functions/ $fpath)
+fi
+
+if [ -d "$ZDOTDIR/dash" ]; then
+  fpath=($ZDOTDIR/dash $fpath)
+  autoload ${fpath[1]}/*(:t)
 fi
 
 # User configuration
