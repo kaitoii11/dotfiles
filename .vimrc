@@ -31,7 +31,7 @@ call dein#add('rking/ag.vim')
 call dein#add('bronson/vim-trailing-whitespace')
 call dein#add('Shougo/vimfiler')
 call dein#add('scrooloose/nerdtree')
-call dein#add('mrtazz/DoxygenToolkit.vim')
+call dein#add('fatih/vim-go')
 call dein#end()
 call dein#save_state()
 
