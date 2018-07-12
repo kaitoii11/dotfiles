@@ -83,7 +83,8 @@ set incsearch
 set foldenable
 set foldnestmax=3
 nnoremap <space> za
-set foldmethod=indent
+set foldmethod=syntax
+set nofoldenable
 
 "display
 syntax on
@@ -180,8 +181,7 @@ au FileType unite nmap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
 au FileType unite nmap <silent> <buffer> <ESC><ESC> q
 au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 " }}}
-" }}
-"
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='badwolf'
 let g:airline_left_sep=' '
@@ -277,3 +277,10 @@ else
 endif
 
 set secure
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
