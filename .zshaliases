@@ -47,4 +47,5 @@ fi
 # ssh with xterm
 alias ssh='TERM=xterm ssh'
 
-
+# rust + go setting
+export PATH="$HOME/.cargo/bin:$GOPATH:$PATH"
