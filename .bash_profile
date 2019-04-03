@@ -21,13 +21,18 @@ cyan="\[$(tput setaf 6)\]"
 white="\[$(tput setaf 7)\]"
 reset="\[$(tput sgr0)\]"
 
+### git branch
+git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
 ### prompt
 function prompt() {
   # Most part of this implementation is taken from: https://superuser.com/questions/187455/right-align-part-of-prompt/1203400#1203400
   if [ $? != 0 ]; then
-    PS1="${reset}\u[${red}\h${reset}] "
+    PS1="${reset}\u[${red}\h${reset}]\$(git_branch)\$ "
   else
-    PS1="${reset}\u[${cyan}\h${reset}] "
+    PS1="${reset}\u[${cyan}\h${reset}]\$(git_branch)\$ "
   fi
   # Create a string like:  "[ ~/Downloads ]" with $PWD in GREEN
   mydir=$(echo $PWD | sed -e "s,^$HOME,~,")
