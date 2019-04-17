@@ -1,0 +1,7 @@
+[user]
+	name = kaitoii11
+	email = kaitoii1111@gmail.com
+[push]
+	default = current
+[merge]
+	tool = vimdiff
